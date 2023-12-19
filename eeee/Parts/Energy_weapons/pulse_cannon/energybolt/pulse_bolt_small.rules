@@ -1,0 +1,206 @@
+ID = "weebletmon.pulse_bolt_small"
+OtherIDs = ["small_pulse_shot", "pulse_cannon", "pulse_laser"]
+Range = 400
+IdealRange = [60, 500]
+IdealRadius = [5, 50]
+Speed = 400
+
+Components
+{
+	Physics
+	{
+		Type = CirclePhysics
+		Radius = 0.01
+		Density = 0.0001
+	}
+
+	Death
+	{
+		Type = DeathByLifetime
+
+	}
+
+	Targetable
+	{
+		Type = Targetable
+		Health = 125
+		TargetCategory = "laser"
+	}
+
+	Hit
+	{
+		Type = PenetratingHit
+		Penetration = 5.0
+		PenetrationSpeed = 25
+		FactorEffectsWith = Targetable
+
+		CrewCollisions = {Enemies=true; Junk=true}
+		HitCrew = &HitOperational
+
+		HitShield = &HitOperational
+		HitOperational
+		{
+			Offset = [-0.15, 0]
+
+			HitEffects
+			[
+				{
+					Type = Damage
+					Damage = 1400
+				}
+				{
+					Type = Impulse;
+					Impulse = 5;
+				}
+				{
+					Type = ExplosiveDamage
+					TotalDamage = 120
+					Radius = 100
+					Delay = .05
+					DamagesOperationalHealth = true
+					DamagesStructuralHealth = false
+					AllowFriendlyDamage = true
+					FireChancePerNDamage = 10%
+					ImpulsePerNDamage = 10
+					NDamage = 100
+				}
+			]
+
+			MediaEffects
+			[
+				&<particles/laser_bolt_small_hit.rules>
+				&<particles/laser_bolt_small_flash.rules>
+				&<particles/laser_bolt_small_sparks.rules>
+				&<particles/laser_bolt_small_spikes.rules>
+
+				: /BASE_SOUNDS/AudioExterior
+				{
+					Sound = "../laser_bolt_small_hit.wav"
+					Volume = .4
+					SpeedVariation = .4
+				}
+
+				: /BASE_SHAKE
+				{
+					ShakeAmount = .03
+					Duration = .3
+				}
+			]
+		}
+		HitStructural
+		{
+			HitEffects
+			[
+				{
+					Type = Damage
+					Damage = 1400
+				}
+				{
+					Type = Impulse;
+					Impulse = 5;
+				}
+				{
+					Type = ExplosiveDamage
+					TotalDamage = 120
+					Radius = 3
+					Delay = .05
+					DamagesOperationalHealth = true
+					DamagesStructuralHealth = false
+					AllowFriendlyDamage = true
+					FireChancePerNDamage = 10%
+					ImpulsePerNDamage = 10
+					NDamage = 100
+				}
+			]
+
+			MediaEffects
+			[
+				&<particles/laser_bolt_small_hit_struct.rules>
+				&<particles/laser_bolt_small_flash.rules>
+				&<particles/laser_bolt_small_sparks_struct.rules>
+
+				: /BASE_SOUNDS/AudioExterior
+				{
+					Sound = "../laser_bolt_small_hit.wav"
+					Volume = .3
+					SpeedVariation = .4
+				}
+			]
+		}
+		PenetratingOperational
+		{
+			ReduceEffectsByPenetration = true
+			HitEffects
+			[
+				{
+					Type = Damage
+					Damage = 750
+				}
+				{
+					Type = Impulse
+					Impulse = 20
+				}
+			]
+		}
+		PenetratingStructural
+		{
+			// No effect.
+		}
+		FinishedPenetratingOperational
+		{
+			// No effect.
+		}
+		FinishedPenetratingStructural
+		{
+			// No effect.
+		}
+	}
+
+	Sprite
+	{
+		Type = AnimatedSprite
+		ReduceScaleWith = Hit
+		ReduceScaleExponent = 0.5
+		Animation
+		{
+			AtlasSprite
+			{
+				Texture
+				{
+					File = "../laser_bolt_small.png"
+					SampleMode = Linear
+					MipLevels = max
+				}
+				Size = [2, 2]
+			}
+			FrameCount = 8
+			FrameSize = [128, 128]
+			FramesPerRow = 2
+			FramesPerSecond = 60
+		}
+	}
+
+	GlowSprite
+	{
+		Type = Sprite
+		RenderBucket = BulletUpper2
+		Z = 0
+		IsLight = true
+		Sprite
+		{
+			Texture
+			{
+				File = "./Data/common_effects/particles/blob.png"
+				MipLevels = max
+				SampleMode = Linear
+			}
+			Size = [6, 6]
+			VertexColor = [255, 0, 0]
+			TargetBlendMode = Add
+			Shader = "./Data/common_effects/fancy_light.shader"
+			_litReflectiveStrength = 24
+			_litAdditiveStrength = 0.05
+			_unlitAdditiveStrength = 0.25
+		}
+	}
+}

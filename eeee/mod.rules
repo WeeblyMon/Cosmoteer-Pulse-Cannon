@@ -1,0 +1,29 @@
+
+ID = weebletmon.testweapon
+
+Name = "test weapon"
+
+Version = 1.0.7
+
+CompatibleGameVersions = ["0.24.3c"]
+
+ModifiesMultiplayer = true
+
+Author = "Weebletmon"
+
+Logo = "logo.png"
+
+Description = "	Test Mod.\n\n"\
+              "idk.\n\n"
+
+StringsFolder = "strings"
+
+
+Actions
+[
+	{ 
+		Action = AddMany
+		AddTo = "<ships/terran/terran.rules>/terran/Parts"
+		ManyToAdd = &<Parts/Parts.rules>/Parts
+	}
+]

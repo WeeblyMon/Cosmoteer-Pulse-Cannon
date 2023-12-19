@@ -1,0 +1,15 @@
+Parts
+{
+	pulse_cannon = "Pulse Cannon"
+	PulseCannonSmallIcon = "Pulse Cannon"
+	PulseCannonSmallDesc = "Sidegrade to the small laser blaster, slower firing, harder hitting, faster projectile and longer range."
+
+}
+
+StatCategories
+{
+	PulseCannonBolt = "Pulse Cannon Shot"
+}
+Stats
+{
+}
